@@ -7,6 +7,8 @@ create table Categories (
 create table Entries (
     category            references Categories(label),
     entry_description   varchar(200) not null,
+    startDate           varchar(30) not null,
+    endDate             varchar(30) not null,
     total_duration      double not null
 );
 

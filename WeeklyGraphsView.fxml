@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="753.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="weeklygraphs.WeeklyGraphsController">
+   <children>
+      <ToolBar prefHeight="47.0" prefWidth="750.0">
+         <items>
+            <Button mnemonicParsing="false" text="Time Log" />
+            <Button mnemonicParsing="false" text="Kanban Board" />
+            <Button mnemonicParsing="false" text="Deep Focus" />
+            <Button mnemonicParsing="false" text="My Life" />
+            <Button mnemonicParsing="false" text="Daily Breakdown" />
+            <Button mnemonicParsing="false" text="Weekly Trends" />
+            <Button fx:id="aboutHelp" mnemonicParsing="false" text="About/Help" />
+         </items>
+      </ToolBar>
+      <Text fx:id="WeeklyGraphsTitle" layoutX="26.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weekly Breakdown and Weekly Trends">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Text layoutX="200.0" layoutY="725.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Activity" />
+      <BarChart fx:id="WeeklyBreakdownGraph" layoutX="64.0" layoutY="209.0" prefHeight="454.0" prefWidth="288.0">
+         <xAxis>
+            <CategoryAxis side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis side="LEFT" />
+         </yAxis>
+      </BarChart>
+      <LineChart fx:id="WeeklyTrendGraph" layoutX="387.0" layoutY="207.0" prefHeight="458.0" prefWidth="334.0">
+         <xAxis>
+            <CategoryAxis side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis side="LEFT" />
+         </yAxis>
+      </LineChart>
+      <Text layoutX="554.0" layoutY="725.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weeks" />
+   </children>
+</AnchorPane>

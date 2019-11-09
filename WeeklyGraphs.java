@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package timegraphs;
+package weeklygraphs;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,14 +15,13 @@ import javafx.stage.Stage;
  *
  * @author priyal
  */
-public class TimeGraphsApplication extends Application {
-
+public class WeeklyGraphs extends Application {
+    
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("TimeGraphsView.fxml"));
-
+        Parent root = FXMLLoader.load(getClass().getResource("WeeklyGraphsView.fxml"));
+        
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("TimeGraphStyles.css");
         
         stage.setScene(scene);
         stage.show();
@@ -32,8 +31,7 @@ public class TimeGraphsApplication extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
         launch(args);
     }
-
+    
 }

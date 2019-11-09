@@ -37,6 +37,10 @@ public class TimeLogController implements Initializable {
     @FXML
     private TextArea entryDescription;
     @FXML
+    private DatePicker startDate;
+    @FXML
+    private DatePicker endDate;
+    @FXML
     private ComboBox startTimeH;
     @FXML
     private ComboBox startTimeM;
@@ -275,11 +279,15 @@ public class TimeLogController implements Initializable {
         try {
             String setCategory  = selectCategory.getValue().toString();
             String entryDesc    = entryDescription.getText();
+            String startdate    = startDate.getValue().toString();
+            String enddate      = endDate.getValue().toString();
             double duration     = calculateDuration();
             
             String query = "INSERT INTO entries VALUES("
                     + "'" + setCategory + "'"
                     + ", '" + entryDesc + "'"
+                    + ", '" + startdate + "'"
+                    + ", '" + enddate + "'"
                     + ", '" + duration + "'"
                     + ")";
             Statement statement = connection.createStatement();

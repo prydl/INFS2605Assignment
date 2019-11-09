@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="753.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="piechartofmylife.PieChartController">
+   <children>
+      <ToolBar prefHeight="47.0" prefWidth="750.0">
+         <items>
+            <Button mnemonicParsing="false" text="Time Log" />
+            <Button mnemonicParsing="false" text="Kanban Board" />
+            <Button mnemonicParsing="false" text="Deep Focus" />
+            <Button mnemonicParsing="false" text="My Life" />
+            <Button mnemonicParsing="false" text="Daily Breakdown" />
+            <Button mnemonicParsing="false" text="Weekly Trends" />
+            <Button fx:id="aboutHelp" mnemonicParsing="false" text="About/Help" />
+         </items>
+      </ToolBar>
+      <Text fx:id="PieChartTitle" layoutX="38.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pie Chart of My Life">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+      <PieChart fx:id="PieChartofMyLife" layoutX="28.0" layoutY="116.0" prefHeight="666.0" prefWidth="699.0" />
+   </children>
+</AnchorPane>
