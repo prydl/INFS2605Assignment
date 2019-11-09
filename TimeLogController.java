@@ -107,7 +107,7 @@ public class TimeLogController implements Initializable {
 
         // hours should be: 0..23
         if (hours < 0) {
-            if (endH > startH) {
+            if (endH < startH) {
                 hours = 24 + hours;
             } else {
                 hours = 0;
