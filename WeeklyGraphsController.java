@@ -90,6 +90,26 @@ public class WeeklyGraphsController implements Initializable {
         }
     }
     
+    public String getDate (String query, String attr) throws SQLException {
+        
+        String date = null;
+        
+        // create connection
+        Connection conn = DriverManager.getConnection(URL);
+        
+        // create statement
+        Statement st = conn.createStatement();
+        
+        System.out.println("** get particular date from database **");
+        
+        ResultSet rs1 = st.executeQuery(query);
+        while (rs1.next()) {
+            date = rs1.getString(attr);
+        }
+        
+        return date;
+    }
+    
     public int getWeeks (String query1, String query2) throws SQLException, ParseException {
         
         Integer nWeeks = 0;
@@ -166,6 +186,11 @@ public class WeeklyGraphsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        // WEEKLY BREAKDOWN GRAPH
+        // Get the date range of the database entries, calculate number of weeks
+        // then retrieve metrics from the database and average per week
+        // Visualised in a BarChart
+        
         String firstdate = "select startDate from entries "
                          + "order by startDate limit 1";
         String lastdate  = "select startDate from entries "
@@ -211,6 +236,93 @@ public class WeeklyGraphsController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
+        
+        // WEEKLY TRENDS GRAPHS
+        // Get number of weeks, calculate weekly durations
+        // then add each one to the graph
+        try {
+            String firstWeekStart = getDate(firstdate, "startDate");
+            
+            int weekNum = 0;
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            
+            XYChart.Series studying = new XYChart.Series();
+            studying.setName("Study");
+            XYChart.Series work = new XYChart.Series();
+            work.setName("Work");
+            XYChart.Series exercise = new XYChart.Series();
+            exercise.setName("Exercise");
+            XYChart.Series cooking = new XYChart.Series();
+            studying.setName("Cooking");
+                    
+            
+            while (weekNum < nWeeks) {
+                
+                int newnum = weekNum + 1;
+                System.out.println("--- Week " + newnum);
+                
+                LocalDate firstWeekDate = LocalDate.parse(firstWeekStart);
+                
+                LocalDate weekStart = firstWeekDate.plusWeeks(weekNum);
+                LocalDate weekEnd   = weekStart.plusDays(6);
+                
+                String weeklyTrends = "select   category, sum(total_duration) "
+                                    + "from     (select startDate, category, total_duration "
+                                    +           "from entries "
+                                    +           "where startDate >= '" + weekStart.toString() + "' "
+                                    +           "and startDate <= '" + weekEnd.toString() + "') "
+                                    + "where    category = 'Studying' or category = 'Work' "
+                                    +           "or category = 'Cooking' or category = 'Exercise' "
+                                    + "group by category "
+                                    + "order by category";
+
+                try {
+
+                    // get array list of events for selected date
+                    ArrayList<Event> eventsList = getEvents(weeklyTrends);
+                    int num = weekNum + 1;
+                    String currWeek = "Week " + num;
+                    
+                    // for each event in list, add to the bar chart 
+                    for (Event curr : eventsList) {
+                        String currCategory = curr.eventCategory;
+                        double currDuration = curr.eventDur;
+
+                        System.out.println("Added: " + currCategory + ", " + currDuration + " to " + currWeek);
+
+                        if (null != currCategory) switch (currCategory) {
+                            case "Studying":
+                                studying.getData().add(new XYChart.Data(currWeek, currDuration));
+                                break;
+                            case "Work":
+                                work.getData().add(new XYChart.Data(currWeek, currDuration));
+                                break;
+                            case "Cooking":
+                                cooking.getData().add(new XYChart.Data(currWeek, currDuration));
+                                break;
+                            case "Exercise":
+                                exercise.getData().add(new XYChart.Data(currWeek, currDuration));
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                weekNum++;
+            }
+            
+            WeeklyTrendsGraph.getData().addAll(studying, work, cooking, exercise);
+            WeeklyTrendsGraph.setVisible(true);
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
     }    
     
 }
